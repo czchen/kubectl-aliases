@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 # Copyright 2017 Google Inc.
@@ -15,15 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import print_function
 import itertools
 import os.path
 import sys
-
-try:
-    xrange  # Python 2
-except NameError:
-    xrange = range  # Python 3
 
 
 def main():
@@ -51,6 +45,7 @@ def main():
         ('po', 'pods', ['g', 'd', 'rm'], None),
         ('dep', 'deployment', ['g', 'd', 'rm'], None),
         ('sts', 'statefulset', ['g', 'd', 'rm'], None),
+        ('rs', 'replicaset', ['g', 'd', 'rm'], None),
         ('svc', 'service', ['g', 'd', 'rm'], None),
         ('ing', 'ingress', ['g', 'd', 'rm'], None),
         ('cm', 'configmap', ['g', 'd', 'rm'], None),
@@ -144,14 +139,14 @@ def gen(parts):
 
 
 def is_valid(cmd):
-    for i in xrange(0, len(cmd)):
+    for i in range(0, len(cmd)):
 
         # check at least one of requirements are in the cmd
         requirements = cmd[i][2]
         if requirements:
             found = False
             for r in requirements:
-                for j in xrange(0, i):
+                for j in range(0, i):
                     if cmd[j][0] == r:
                         found = True
                         break
@@ -165,7 +160,7 @@ def is_valid(cmd):
         if incompatibilities:
             found = False
             for inc in incompatibilities:
-                for j in xrange(0, i):
+                for j in range(0, i):
                     if cmd[j][0] == inc:
                         found = True
                         break
@@ -179,7 +174,7 @@ def is_valid(cmd):
 
 def combinations(a, n, include_0=True):
     l = []
-    for j in xrange(0, n + 1):
+    for j in range(0, n + 1):
         if not include_0 and j == 0:
             continue
         l += list(itertools.combinations(a, j))
